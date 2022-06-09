@@ -23,38 +23,39 @@ window = tk.Tk()
 
 collected_values = []
 
-def retrieve_rating_value():
-    value = 
+# def button_clicked():
+#     value = 
 
-def increase():
-    value = int(lbl_value["text"])
-    lbl_value["text"] = f"{value + 1}"
+# def increase():
+#     value = int(lbl_value["text"])
+#     lbl_value["text"] = f"{value + 1}"
 
-frame_picture = tk.Frame()
-frame_rating_buttons = tk.Frame()
+# frame_picture = tk.Frame()
+# frame_rating_buttons = tk.Frame()
 
 
-lbl_value = tk.Label(master=frame_rating_buttons, text="0")
-lbl_value.grid(row=0, column=1)
+# lbl_value = tk.Label(master=frame_rating_buttons, text="0")
+# lbl_value.grid(row=0, column=1)
 
-btn_1 = tk.Button(master=frame_rating_buttons, text="1", command=increase)
-btn_1.grid(row=0, column=0, sticky="nsew")
+# btn_1 = tk.Button(master=frame_rating_buttons, text="1", command=increase)
+# btn_1.grid(row=0, column=0, sticky="nsew")
 
-btn_2 = tk.Button(master=frame_rating_buttons, text="2", command=increase)
-btn_2.grid(row=0, column=1, sticky="nsew")
+# btn_2 = tk.Button(master=frame_rating_buttons, text="2", command=increase)
+# btn_2.grid(row=0, column=1, sticky="nsew")
 
-btn_3 = tk.Button(master=frame_rating_buttons, text="3", command=increase)
-btn_3.grid(row=0, column=2, sticky="nsew")
+# btn_3 = tk.Button(master=frame_rating_buttons, text="3", command=increase)
+# btn_3.grid(row=0, column=2, sticky="nsew")
 
-btn_4 = tk.Button(master=frame_rating_buttons, text="4", command=increase)
-btn_4.grid(row=0, column=3, sticky="nsew")
+# btn_4 = tk.Button(master=frame_rating_buttons, text="4", command=increase)
+# btn_4.grid(row=0, column=3, sticky="nsew")
 
-btn_5 = tk.Button(master=frame_rating_buttons, text="5", command=increase)
-btn_5.grid(row=0, column=4, sticky="nsew")
+# btn_5 = tk.Button(master=frame_rating_buttons, text="5", command=increase)
+# btn_5.grid(row=0, column=4, sticky="nsew")
 
-frame_rating_buttons.pack()
+# frame_picture.pack()
+# frame_rating_buttons.pack()
 
-window.mainloop()
+# window.mainloop()
 #choosing random pictures from a chosen folder
 choices = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 2)
 choices = ["../../faces/high_quality_dataset/hot/" + choice for choice in choices]
