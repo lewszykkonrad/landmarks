@@ -1,4 +1,3 @@
-from operator import imod
 import cv2
 import os
 import math
@@ -16,32 +15,36 @@ import tkinter as tk
 
 
 #list for storing the ratings user has given
-sequence = []
+training_sequence = []
+test_sequence = []
 
-#a variable used for iteration through different images that will be updated with every click
-value = 0
+sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 50)
+sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
 
-choices = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 10)
-choices = ["../../faces/high_quality_dataset/hot/" + choice for choice in choices]
-
-images = [Image.open(x) for x in choices]
+images = [Image.open(x) for x in sample]
 images = [x.resize((400,500)) for x in images]
 
+training_images = images[:25]
+testing_images = images[25:]
+
+###################
+# Training sample #
+###################
 window = tk.Tk()
 
-frame_image = ImageTk.PhotoImage(images.pop())
+frame_image = ImageTk.PhotoImage(training_images.pop())
 
 frame_a = tk.Frame()
 frame_b = tk.Frame()
 
 def on_click(value):
-    sequence.append(value)
+    training_sequence.append(value)
 
 def change_pic():
-    if len(images) == 0:
+    if len(training_images) == 0:
         window.destroy()
     else:
-        photo = ImageTk.PhotoImage(images.pop())
+        photo = ImageTk.PhotoImage(training_images.pop())
         picture_placeholder.configure(image=photo)
         picture_placeholder.image = photo 
     print("updated")
@@ -90,9 +93,12 @@ frame_a.pack()
 
 window.mainloop()
 
+##################
+# testing sample #
+##################
 
 
-
-
+print(len(training_sequence))
+print(training_sequence)
 
 
