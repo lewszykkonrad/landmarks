@@ -11,8 +11,9 @@ import matplotlib.pyplot as plt
 import imutils
 from imutils import face_utils
 from scipy.spatial import distance
-
 from shapely.geometry import Polygon
+#the dlib functions I wrote in dlib_functions.py
+import dlib_functions
 
 #detector and predictor needed for the dlib landmark detection (detector detects the face, predictor predicts the landmarks)
 detector = dlib.get_frontal_face_detector()
@@ -45,6 +46,17 @@ for (i, rect) in enumerate(rects):
                     fontScale, color, thickness, cv2.LINE_AA)
         index += 1
 
+colnames = ['s1', 's2', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9',
+                'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
+                'a20', 'a21', 'a22', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
+                'd10', 'd11', 'd12', 'd13', 'd14', 'da1', 'da2']
+final_dataset = pd.DataFrame(columns = colnames)
+
+shape = dlib_functions.facial_landmark_processor(path)
+parameters = dlib_functions.parameter_processor(shape)
+final_dataset = final_dataset.append(parameters, ignore_index=True)
+print(final_dataset)
     
 cv2.imshow("image window",image)
 cv2.waitKey(0)
+

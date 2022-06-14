@@ -1,3 +1,5 @@
+from email.utils import encode_rfc2231
+from turtle import end_fill
 import cv2
 import os
 import math
@@ -120,4 +122,11 @@ for path in sample:
     parameters = dlib_functions.parameter_processor(shape)
     final_dataset = final_dataset.append(parameters, ignore_index=True)
 
+final_dataset['image_name'] = image_names
+final_dataset['rating'] = sequence
 print(final_dataset)
+
+filename = input("please enter your first and last name in this format: firstname_lastname  ")
+filename = "datasets/" + filename + ".csv"
+
+#final_dataset.to_csv(filename, encoding = 'utf-8', index = False)
