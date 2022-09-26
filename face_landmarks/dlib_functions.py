@@ -111,6 +111,10 @@ def parameter_processor(shape):
     lower_lip_points = [tuple(x) for x in lower_lip_points]
     lower_lip_area = Area(lower_lip_points)
     
+    lip_area_points = [shape[48], shape[59], shape[58], shape[57], shape[56], shape[55],
+                       shape[54], shape[53], shape[52], shape[51], shape[50], shape[49]]
+    lip_area_points =    [tuple(x) for x in lip_area_points]
+    lip_area = Area(lip_area_points)              
     
     left_cupid_lip_width = distance.euclidean(shape[50], shape[58])
     right_cupid_lip_width = distance.euclidean(shape[52], shape[56])
@@ -197,7 +201,7 @@ def parameter_processor(shape):
     
     
     #area ratios
-    eyes_to_lips = ((right_eye_area + left_eye_area) / (upper_lip_area + lower_lip_area))
+    eyes_to_lips = ((right_eye_area + left_eye_area) / (lip_area))
     ratio_dictionary['a1'] = eyes_to_lips
     
     eyes_to_nose = ((right_eye_area + left_eye_area) / nose_area)
@@ -209,22 +213,22 @@ def parameter_processor(shape):
     eyes_to_top_face = ((right_eye_area + left_eye_area) / top_face_area)
     ratio_dictionary['a4'] = eyes_to_top_face
     
-    lips_to_nose = ((upper_lip_area + lower_lip_area) / nose_area)
+    lips_to_nose = ((lip_area) / nose_area)
     ratio_dictionary['a5'] = lips_to_nose
     
-    lips_to_face = ((upper_lip_area + lower_lip_area) / face_area)
+    lips_to_face = ((lip_area) / face_area)
     ratio_dictionary['a6'] = lips_to_face
     
-    lips_to_lower_face = ((upper_lip_area + lower_lip_area) / lower_face_area)
+    lips_to_lower_face = ((lip_area) / lower_face_area)
     ratio_dictionary['a7'] = lips_to_lower_face
     
     nose_to_face = (nose_area / face_area)
     ratio_dictionary['a8'] = nose_to_face
     
-    eyes_lips_nose_to_face = ((right_eye_area + left_eye_area + upper_lip_area + lower_lip_area + nose_area) / face_area)
+    eyes_lips_nose_to_face = ((right_eye_area + left_eye_area + lip_area + nose_area) / face_area)
     ratio_dictionary['a9'] = eyes_lips_nose_to_face
     
-    eyes_lips_nose_to_inner_face = ((right_eye_area + left_eye_area + upper_lip_area + lower_lip_area + nose_area) 
+    eyes_lips_nose_to_inner_face = ((right_eye_area + left_eye_area + lip_area + nose_area) 
                                     / inner_triangle_area)
     ratio_dictionary['a10'] = eyes_lips_nose_to_inner_face
     
