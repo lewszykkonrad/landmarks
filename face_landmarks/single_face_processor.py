@@ -23,7 +23,7 @@ predictor = dlib.shape_predictor("C:/Users/lewsz/OneDrive/Desktop/master_thesis/
 font = cv2.FONT_HERSHEY_SIMPLEX
 org = (236, 135)
 fontScale = 0.2
-color = (255, 255, 255)
+color = (0, 0, 0)
 thickness = 1
 
 user_query = input("what image would you like to process? (what is the number of the image?):  ")
