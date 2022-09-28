@@ -14,7 +14,9 @@ from scipy.spatial import distance
 from PIL import Image, ImageTk
 from shapely.geometry import Polygon
 #package used for GUI
-import tkinter as tk 
+import tkinter as tk
+
+from sqlalchemy import between 
 #the dlib functions I wrote in dlib_functions.py
 import dlib_functions
 
@@ -37,8 +39,15 @@ images = [x.resize((400,500)) for x in images]
 #the  function I wrote in dlib_functions uses path as an input, while here I have processed images meant for display to the user. I will
 #save the paths of the images and later pass them into the dlib_function
 
+#appending values on binary and trinary ratings
 def on_click(value):
     sequence.append(value)
+
+#appending values on rational rating
+def evaluate(entry):
+    if 1 <= entry.get() <= 5:
+        sequence.append(eval(entry.get()))
+    else:
 
 def change_pic():
     if len(images) == 0:
@@ -125,6 +134,7 @@ window = tk.Tk()
 frame_image = ImageTk.PhotoImage(images.pop())
 
 frame_a = tk.Frame()
+number_entry = tk.Entry()
 frame_b = tk.Frame()
 
 
@@ -140,35 +150,19 @@ picture_placeholder.pack()
 button_1 = tk.Button(
     master = frame_b, 
     command = lambda: [on_click(1), change_pic()],
-    text = "1",
+    text = "SUBMIT",
     width=25,
     height=5,
     foreground="white",
     background="black")
 button_1.grid(row = 0, column=0)
 
-button_2 = tk.Button(
-    master = frame_b, 
-    command = lambda: [on_click(2), change_pic()],
-    text = "2",
-    width=25,
-    height=5,
-    foreground="white",
-    background="black")
-button_2.grid(row = 0, column=1)
 
-button_3 = tk.Button(
-    master = frame_b, 
-    command = lambda: [on_click(3), change_pic()],
-    text = "3",
-    width=25,
-    height=5,
-    foreground="white",
-    background="black")
-button_3.grid(row = 0, column=2)
 
 frame_b.pack()
+number_entry.pack()
 frame_a.pack()
+
 
 window.mainloop()
 
