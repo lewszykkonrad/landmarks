@@ -37,17 +37,6 @@ images = [x.resize((400,500)) for x in images]
 #the  function I wrote in dlib_functions uses path as an input, while here I have processed images meant for display to the user. I will
 #save the paths of the images and later pass them into the dlib_function
 
-
-###################
-# Training sample #
-###################
-window = tk.Tk()
-
-frame_image = ImageTk.PhotoImage(images.pop())
-
-frame_a = tk.Frame()
-frame_b = tk.Frame()
-
 def on_click(value):
     sequence.append(value)
 
@@ -59,6 +48,85 @@ def change_pic():
         picture_placeholder.configure(image=photo)
         picture_placeholder.image = photo 
     print("updated")
+
+###################
+# Training sample #
+###################
+def user_selects_rating_choice():
+    choice = input("how would you like to rate the faces? (choices are: binary, trinary, rational) ")
+    if choice not in ["binary", "trinary", "rational"]:
+        print("please select one of the appropriate options")
+        return user_selects_rating_choice()
+    else:
+        return choice
+
+rating_choice = user_selects_rating_choice()
+
+
+#Binary
+"""
+window = tk.Tk()
+
+frame_image = ImageTk.PhotoImage(images.pop())
+
+frame_a = tk.Frame()
+frame_b = tk.Frame()
+
+
+picture_placeholder = tk.Label(
+    master = frame_a,
+    image = frame_image,
+    text = "Picture",
+    foreground= "white",
+    background="black"
+    )
+picture_placeholder.pack()
+
+button_1 = tk.Button(
+    master = frame_b, 
+    command = lambda: [on_click(1), change_pic()],
+    text = "1",
+    width=25,
+    height=5,
+    foreground="white",
+    background="black")
+button_1.grid(row = 0, column=0)
+
+button_2 = tk.Button(
+    master = frame_b, 
+    command = lambda: [on_click(2), change_pic()],
+    text = "2",
+    width=25,
+    height=5,
+    foreground="white",
+    background="black")
+button_2.grid(row = 0, column=1)
+
+button_3 = tk.Button(
+    master = frame_b, 
+    command = lambda: [on_click(3), change_pic()],
+    text = "3",
+    width=25,
+    height=5,
+    foreground="white",
+    background="black")
+button_3.grid(row = 0, column=2)
+
+frame_b.pack()
+frame_a.pack()
+
+window.mainloop()
+
+"""
+
+#RATIONAL
+window = tk.Tk()
+
+frame_image = ImageTk.PhotoImage(images.pop())
+
+frame_a = tk.Frame()
+frame_b = tk.Frame()
+
 
 picture_placeholder = tk.Label(
     master = frame_a,

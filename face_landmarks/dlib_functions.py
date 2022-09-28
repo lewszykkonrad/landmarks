@@ -267,6 +267,9 @@ def parameter_processor(shape):
     
     vision_to_face = (right_vision_area + left_vision_area) / face_area
     ratio_dictionary['a22'] = vision_to_face
+
+    nose_lips_eyes_to_features_area = (nose_area + right_eye_area + left_eye_area + lip_area) / features_area
+    ratio_dictionary['a23'] = nose_lips_eyes_to_features_area
     
     #distances
     
