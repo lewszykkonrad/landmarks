@@ -52,6 +52,29 @@ def change_pic():
         picture_placeholder.image = photo 
     print("updated")
 
+def change_picture_and_store_rating(event): 
+        global image_index
+        image_index += 1
+        if 1 <= eval(entry.get()) <= 5:
+            res.configure(text = "Result: " + str(eval(entry.get())))
+            sequence.append(eval(entry.get()))
+            if image_index == len(images):
+                window.destroy()
+            else:
+                photo = ImageTk.PhotoImage(images[image_index])
+                picture_placeholder.configure(image=photo)
+                picture_placeholder.image = photo 
+
+def go_back():
+    if len(sequence) == 0:
+                return
+    global image_index
+    image_index -= 1
+    sequence.pop()
+    photo = ImageTk.PhotoImage(images[image_index])
+    picture_placeholder.configure(image=photo)
+    picture_placeholder.image = photo 
+              
 ###################
 # Training sample #
 ###################
