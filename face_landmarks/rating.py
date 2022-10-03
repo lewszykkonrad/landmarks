@@ -1,4 +1,5 @@
 from email.utils import encode_rfc2231
+from secrets import choice
 from turtle import end_fill
 import cv2
 import os
@@ -10,6 +11,7 @@ import imutils
 import random
 import re
 from imutils import face_utils
+from platformdirs import user_cache_dir
 from scipy.spatial import distance
 from PIL import Image, ImageTk
 from shapely.geometry import Polygon
@@ -21,66 +23,15 @@ from sqlalchemy import between
 import dlib_functions
 
 
-#list for storing the ratings user has given
-sequence = []
-
-#the sample of paths for images
-sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 10)
-sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
-
-#it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
-#between users
-image_names = [re.search(r"image_\d+.jpg", path).group() for path in sample]
-
-images = [Image.open(x) for x in sample]
-images = [x.resize((400,500)) for x in images]
 
 
-#the  function I wrote in dlib_functions uses path as an input, while here I have processed images meant for display to the user. I will
-#save the paths of the images and later pass them into the dlib_function
-
-#appending values on binary and trinary ratings
-def on_click(value):
-    sequence.append(value)
-
-def change_pic():
-    if len(images) == 0:
-        window.destroy()
-    else:
-        photo = ImageTk.PhotoImage(images.pop(0))
-        picture_placeholder.configure(image=photo)
-        picture_placeholder.image = photo 
-    print("updated")
-
-def change_picture_and_store_rating(event): 
-        global image_index
-        image_index += 1
-        if 1 <= eval(entry.get()) <= 5:
-            res.configure(text = "Result: " + str(eval(entry.get())))
-            sequence.append(eval(entry.get()))
-            if image_index == len(images):
-                window.destroy()
-            else:
-                photo = ImageTk.PhotoImage(images[image_index])
-                picture_placeholder.configure(image=photo)
-                picture_placeholder.image = photo 
-
-def go_back():
-    if len(sequence) == 0:
-                return
-    global image_index
-    image_index -= 1
-    sequence.pop()
-    photo = ImageTk.PhotoImage(images[image_index])
-    picture_placeholder.configure(image=photo)
-    picture_placeholder.image = photo 
               
 ###################
 # Training sample #
 ###################
 def user_selects_rating_choice():
-    choice = input("how would you like to rate the faces? (choices are: binary, trinary, rational) ")
-    if choice not in ["binary", "trinary", "rational"]:
+    choice = input("how would you like to rate the faces? (choices are: binary, quintary, rational) ")
+    if choice not in ["binary", "quintary", "rational"]:
         print("please select one of the appropriate options")
         return user_selects_rating_choice()
     else:
@@ -93,11 +44,61 @@ rating_choice = user_selects_rating_choice()
 #    BINARY       #
 ###################
 def binary():
+    
+    global image_index
+    image_index = 0
+    sequence = []
+
+    #the sample of paths for images
+    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 10)
+    sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
+
+    #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
+    #between users
+    image_names = [re.search(r"image_\d+.jpg", path).group() for path in sample]
+
+    images = [Image.open(x) for x in sample]
+    images = [x.resize((400,500)) for x in images]
+
+    def on_click(value):
+        sequence.append(value)
+
+    def change_pic(): 
+        global image_index
+        image_index += 1
+        if image_index == len(images):
+            window.destroy()
+        else:
+            photo = ImageTk.PhotoImage(images[image_index])
+            picture_placeholder.configure(image=photo)
+            picture_placeholder.image = photo 
+
+            image_filename = image_names[image_index]
+            filename_placeholder.configure(text = image_filename)
+            filename_placeholder.text = image_filename
+
+    def go_back():
+        if len(sequence) == 0:
+                    return
+        global image_index
+        image_index -= 1
+        sequence.pop()
+
+        photo = ImageTk.PhotoImage(images[image_index])
+        picture_placeholder.configure(image=photo)
+        picture_placeholder.image = photo 
+
+        image_filename = image_names[image_index]
+        filename_placeholder.configure(text = image_filename)
+        filename_placeholder.text = image_filename
+
     window = tk.Tk()
-    frame_image = ImageTk.PhotoImage(images.pop(0))
+    frame_image = ImageTk.PhotoImage(images[image_index])
 
     frame_a = tk.Frame()
     frame_b = tk.Frame()
+    frame_c = tk.Frame()
+    frame_d = tk.Frame()
 
     picture_placeholder = tk.Label(
         master = frame_a,
@@ -108,14 +109,26 @@ def binary():
         )
     picture_placeholder.pack()
 
+    filename_placeholder = tk.Label(
+        master = frame_d,
+        text = image_names[image_index],
+        foreground= "black",
+        background= "white",
+        height= 5,
+        width = 50,
+        font = 10
+    )
+    filename_placeholder.pack()
+
     button_1 = tk.Button(
         master = frame_b, 
         command = lambda: [on_click(1), change_pic()],
         text = "1",
         width=25,
-        height=5,
+        height=2,
         foreground="white",
-        background="black")
+        background="black",
+        font = 10)
     button_1.grid(row = 0, column=0)
 
     button_2 = tk.Button(
@@ -123,13 +136,28 @@ def binary():
         command = lambda: [on_click(2), change_pic()],
         text = "2",
         width=25,
-        height=5,
+        height=2,
         foreground="white",
-        background="black")
+        background="black",
+        font = 10)
     button_2.grid(row = 0, column=1)
 
+    go_back_button = tk.Button(
+        master = frame_c, 
+        command = lambda: [go_back()],
+        text = "Go back",
+        width=25,
+        height=1,
+        foreground="white",
+        background="black",
+        font = 10)
+    go_back_button.grid(row = 2, column=0)
+    
+    frame_d.pack()
     frame_b.pack()
     frame_a.pack()
+    frame_c.pack()
+    
     window.mainloop()
 
     #initiating a dataframe for storing rating results
@@ -149,14 +177,64 @@ def binary():
     return(final_dataset)
 
 ###################
-#    TRINARY      #
+#    QUINTARY     #
 ###################
-def trinary():
+def quintary():
+    
+    global image_index
+    image_index = 0
+    sequence = []
+
+    #the sample of paths for images
+    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 10)
+    sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
+
+    #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
+    #between users
+    image_names = [re.search(r"image_\d+.jpg", path).group() for path in sample]
+
+    images = [Image.open(x) for x in sample]
+    images = [x.resize((400,500)) for x in images]
+
+    def on_click(value):
+        sequence.append(value)
+
+    def change_pic(): 
+        global image_index
+        image_index += 1
+        if image_index == len(images):
+            window.destroy()
+        else:
+            photo = ImageTk.PhotoImage(images[image_index])
+            picture_placeholder.configure(image=photo)
+            picture_placeholder.image = photo 
+
+            image_filename = image_names[image_index]
+            filename_placeholder.configure(text = image_filename)
+            filename_placeholder.text = image_filename
+
+    def go_back():
+        if len(sequence) == 0:
+                    return
+        global image_index
+        image_index -= 1
+        sequence.pop()
+
+        photo = ImageTk.PhotoImage(images[image_index])
+        picture_placeholder.configure(image=photo)
+        picture_placeholder.image = photo 
+
+        image_filename = image_names[image_index]
+        filename_placeholder.configure(text = image_filename)
+        filename_placeholder.text = image_filename
+
     window = tk.Tk()
-    frame_image = ImageTk.PhotoImage(images.pop(0))
+    frame_image = ImageTk.PhotoImage(images[image_index])
 
     frame_a = tk.Frame()
     frame_b = tk.Frame()
+    frame_c = tk.Frame()
+    frame_d = tk.Frame()
 
     picture_placeholder = tk.Label(
         master = frame_a,
@@ -167,38 +245,88 @@ def trinary():
         )
     picture_placeholder.pack()
 
+    filename_placeholder = tk.Label(
+        master = frame_d,
+        text = image_names[image_index],
+        foreground= "black",
+        background= "white",
+        height= 5,
+        width = 50,
+        font = 10
+    )
+    filename_placeholder.pack()
+
     button_1 = tk.Button(
         master = frame_b, 
         command = lambda: [on_click(1), change_pic()],
         text = "1",
-        width=25,
-        height=5,
+        width=10,
+        height=2,
         foreground="white",
-        background="black")
+        background="black",
+        font = 10)
     button_1.grid(row = 0, column=0)
 
     button_2 = tk.Button(
         master = frame_b, 
         command = lambda: [on_click(2), change_pic()],
         text = "2",
-        width=25,
-        height=5,
+        width=10,
+        height=2,
         foreground="white",
-        background="black")
+        background="black",
+        font = 10)
     button_2.grid(row = 0, column=1)
 
     button_3 = tk.Button(
         master = frame_b, 
         command = lambda: [on_click(3), change_pic()],
         text = "3",
-        width=25,
-        height=5,
+        width=10,
+        height=2,
         foreground="white",
-        background="black")
+        background="black",
+        font = 10)
     button_3.grid(row = 0, column=2)
 
+    button_4 = tk.Button(
+        master = frame_b, 
+        command = lambda: [on_click(4), change_pic()],
+        text = "4",
+        width=10,
+        height=2,
+        foreground="white",
+        background="black",
+        font = 10)
+    button_4.grid(row = 0, column=3)
+
+    button_5 = tk.Button(
+        master = frame_b, 
+        command = lambda: [on_click(5), change_pic()],
+        text = "5",
+        width=10,
+        height=2,
+        foreground="white",
+        background="black",
+        font = 10)
+    button_5.grid(row = 0, column=4)
+
+    go_back_button = tk.Button(
+        master = frame_c, 
+        command = lambda: [go_back()],
+        text = "Go back",
+        width=25,
+        height=1,
+        foreground="white",
+        background="black",
+        font = 10)
+    go_back_button.grid(row = 2, column=0)
+    
+    frame_d.pack()
     frame_b.pack()
     frame_a.pack()
+    frame_c.pack()
+    
     window.mainloop()
 
     #initiating a dataframe for storing rating results
@@ -220,10 +348,13 @@ def trinary():
 ###################
 #    RATIONAL      #
 ###################
-def rationaL_rating():
+def rational():
+    global image_index
+    image_index = 0
+
     sequence = []
 
-    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 5)
+    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 50)
     sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
 
     image_names = [re.search(r"image_\d+.jpg", path).group() for path in sample]
@@ -232,19 +363,44 @@ def rationaL_rating():
     images = [x.resize((400,500)) for x in images]
 
     def change_picture_and_store_rating(event): 
+        global image_index
+        image_index += 1
         if 1 <= eval(entry.get()) <= 5:
             res.configure(text = "Result: " + str(eval(entry.get())))
             sequence.append(eval(entry.get()))
-            if len(images) == 0:
+            if image_index == len(images):
                 window.destroy()
             else:
-                photo = ImageTk.PhotoImage(images.pop(0))
+                photo = ImageTk.PhotoImage(images[image_index])
                 picture_placeholder.configure(image=photo)
                 picture_placeholder.image = photo 
+
+                image_filename = image_names[image_index]
+                filename_placeholder.configure(text = image_filename)
+                filename_placeholder.text = image_filename
+
+    def go_back():
+        if len(sequence) == 0:
+                    return
+        global image_index
+        image_index -= 1
+        sequence.pop()
         
+        photo = ImageTk.PhotoImage(images[image_index])
+        picture_placeholder.configure(image=photo)
+        picture_placeholder.image = photo 
+
+        image_filename = image_names[image_index]
+        filename_placeholder.configure(text = image_filename)
+        filename_placeholder.text = image_filename
+              
+                
     window = tk.Tk()
     frame_a = tk.Frame()
-    frame_image = ImageTk.PhotoImage(images.pop(0))
+    frame_b = tk.Frame()
+    frame_c = tk.Frame()
+    frame_image = ImageTk.PhotoImage(images[image_index])
+
 
     picture_placeholder = tk.Label(
         master = frame_a,
@@ -255,12 +411,44 @@ def rationaL_rating():
         )
     picture_placeholder.pack()
 
-    tk.Label(window, text="You are rating in rational numbers from 1 to 5 (you can input digits after the comma):").pack()
+    filename_placeholder = tk.Label(
+        master = frame_c,
+        text = image_names[image_index],
+        foreground= "white",
+        background= "black",
+        height= 2,
+        width = 50,
+        bd = 10,
+        font= 10
+    )
+    filename_placeholder.pack()
 
-    entry = tk.Entry(window)
+    go_back_button = tk.Button(
+        master = frame_b, 
+        command = lambda: [go_back()],
+        text = "Go back",
+        width=25,
+        height=1,
+        foreground="black",
+        background="white",
+        bd = 0,
+        font = 5,
+        highlightbackground = "black", 
+        highlightcolor="black",
+        highlightthickness = 5)
+    go_back_button.grid(row = 0, column=0)
+
+    label = tk.Label(window, 
+        text="You are rating in rational numbers from 1 to 5 (you can input digits after the comma)", 
+        bd=40).pack()
+
+    entry = tk.Entry(window, highlightthickness=5)
+    entry.configure(highlightbackground="black", highlightcolor="black")
     entry.bind("<Return>", change_picture_and_store_rating)
 
+    frame_c.pack()
     frame_a.pack()
+    frame_b.pack()
     entry.pack()
     res = tk.Label(window)
     res.pack()
@@ -283,11 +471,19 @@ def rationaL_rating():
     final_dataset['image_name'] = image_names
     final_dataset['rating'] = sequence
 
+    print(sequence)
     return(final_dataset)
 
 
+if rating_choice == "binary":
+    rated_dataset = binary()
+elif rating_choice == "quintary":
+    rated_dataset = quintary()
+else:
+    rated_dataset = rational()
+
 
 filename = input("please enter your first and last name in this format: firstname_lastname  ")
-filename = "datasets/" + filename + ".csv"
+filename = "datasets/" + filename + "_" + rating_choice + ".csv"
 
-#final_dataset.to_csv(filename, encoding = 'utf-8', index = False)
+rated_dataset.to_csv(filename, encoding = 'utf-8', index = False)
