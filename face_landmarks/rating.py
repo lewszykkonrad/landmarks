@@ -470,8 +470,6 @@ def rational():
 
     final_dataset['image_name'] = image_names
     final_dataset['rating'] = sequence
-
-    print(sequence)
     return(final_dataset)
 
 
