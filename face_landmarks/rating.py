@@ -50,8 +50,8 @@ def binary():
     sequence = []
 
     #the sample of paths for images
-    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 10)
-    sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
+    sample = random.sample(os.listdir("../../faces/high_quality_dataset/total_dataset"), 590)
+    sample = ["../../faces/high_quality_dataset/total_dataset/" + choice for choice in sample]
 
     #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
     #between users
@@ -122,8 +122,8 @@ def binary():
 
     button_1 = tk.Button(
         master = frame_b, 
-        command = lambda: [on_click(1), change_pic()],
-        text = "1",
+        command = lambda: [on_click(0), change_pic()],
+        text = "0",
         width=25,
         height=2,
         foreground="white",
@@ -133,8 +133,8 @@ def binary():
 
     button_2 = tk.Button(
         master = frame_b, 
-        command = lambda: [on_click(2), change_pic()],
-        text = "2",
+        command = lambda: [on_click(1), change_pic()],
+        text = "1",
         width=25,
         height=2,
         foreground="white",
