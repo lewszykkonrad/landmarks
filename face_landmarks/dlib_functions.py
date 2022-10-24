@@ -47,7 +47,7 @@ def facial_landmark_processor(image_path):
 def parameter_processor(shape):
     
     #creating a dictionary, that will be added later to a dataframe
-    ratio_dictionary =  {}
+    ratio_dictionary = {}
     
     #parameters that will be used for counting ratios and creating target variables
     
@@ -67,7 +67,7 @@ def parameter_processor(shape):
     eye_outer_distance = distance.euclidean(shape[36], shape[45])
     
     right_horizontal_eyebrow_width = distance.euclidean(shape[22], shape[26])
-    left_horizontal_eyebrow_width = distance.euclidean(shape[36], shape[39])
+    left_horizontal_eyebrow_width = distance.euclidean(shape[17], shape[21])
     
     right_eyebrow_length = (distance.euclidean(shape[22], shape[23]) + 
                             distance.euclidean(shape[23], shape[24]) +
@@ -197,8 +197,8 @@ def parameter_processor(shape):
     
     eye_length_symmetry = (right_eye_length/left_eye_length)
     ratio_dictionary['s2'] = eye_length_symmetry
-    
-    
+
+
     
     #area ratios
     eyes_to_lips = ((right_eye_area + left_eye_area) / (lip_area))
@@ -314,6 +314,15 @@ def parameter_processor(shape):
     
     nose_width_to_nose_mouth_distance = nose_width / mouth_to_nose_distance
     ratio_dictionary['d14'] = nose_width_to_nose_mouth_distance
+
+    mouth_length_to_width = mouth_length / mouth_width
+    ratio_dictionary['d15'] = mouth_length_to_width
+
+    features_length_to_face_width = ((right_eyebrow_length + left_eyebrow_length + mouth_length + left_eyebrow_length + right_eyebrow_length) / face_width_at_top)
+    ratio_dictionary['d16'] = features_length_to_face_width
+
+    features_length_to_face_length = ((right_eyebrow_length + left_eyebrow_length + mouth_length + left_eyebrow_length + right_eyebrow_length) / face_length)
+    ratio_dictionary['d17'] = features_length_to_face_length
     
     
     
@@ -324,7 +333,9 @@ def parameter_processor(shape):
     
     vision_to_face_width = ((right_vision_area + left_vision_area) / face_width_at_top)
     ratio_dictionary['da2'] = vision_to_face_width
-    
+
+    features_length_to_features_area = ((right_eyebrow_length + left_eyebrow_length + mouth_length + left_eyebrow_length + right_eyebrow_length) / features_area)
+    ratio_dictionary['da3'] = features_length_to_features_area
     
                                                  
     return ratio_dictionary

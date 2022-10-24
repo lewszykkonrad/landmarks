@@ -50,7 +50,8 @@ def binary():
     sequence = []
 
     #the sample of paths for images
-    sample = random.sample(os.listdir("../../faces/high_quality_dataset/total_dataset"), 590)
+    #sample = random.sample(os.listdir("../../faces/high_quality_dataset/total_dataset"), 702)
+    sample = os.listdir("../../faces/high_quality_dataset/total_dataset")
     sample = ["../../faces/high_quality_dataset/total_dataset/" + choice for choice in sample]
 
     #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
@@ -162,9 +163,9 @@ def binary():
 
     #initiating a dataframe for storing rating results
     colnames = ['s1', 's2', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9',
-                    'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
-                    'a20', 'a21', 'a22', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
-                    'd10', 'd11', 'd12', 'd13', 'd14', 'da1', 'da2']
+                'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
+                'a20', 'a21', 'a22', 'a23','d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
+                'd10', 'd11', 'd12', 'd13', 'd14', 'd15', 'd16', 'd17','da1', 'da2', 'da3']
     final_dataset = pd.DataFrame(columns = colnames)
 
     for path in sample:
@@ -186,7 +187,7 @@ def quintary():
     sequence = []
 
     #the sample of paths for images
-    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 10)
+    sample = os.listdir("../../faces/high_quality_dataset/hot"), 702
     sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
 
     #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
@@ -331,9 +332,9 @@ def quintary():
 
     #initiating a dataframe for storing rating results
     colnames = ['s1', 's2', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9',
-                    'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
-                    'a20', 'a21', 'a22', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
-                    'd10', 'd11', 'd12', 'd13', 'd14', 'da1', 'da2']
+                'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
+                'a20', 'a21', 'a22', 'a23','d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
+                'd10', 'd11', 'd12', 'd13', 'd14', 'd15', 'd16', 'd17','da1', 'da2', 'da3']
     final_dataset = pd.DataFrame(columns = colnames)
 
     for path in sample:
@@ -354,7 +355,7 @@ def rational():
 
     sequence = []
 
-    sample = random.sample(os.listdir("../../faces/high_quality_dataset/hot"), 50)
+    sample = os.listdir("../../faces/high_quality_dataset/hot"), 702
     sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
 
     image_names = [re.search(r"image_\d+.jpg", path).group() for path in sample]
@@ -457,9 +458,9 @@ def rational():
 
     #initiating a dataframe for storing rating results
     colnames = ['s1', 's2', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9',
-                    'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
-                    'a20', 'a21', 'a22', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
-                    'd10', 'd11', 'd12', 'd13', 'd14', 'da1', 'da2']
+                'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
+                'a20', 'a21', 'a22', 'a23','d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
+                'd10', 'd11', 'd12', 'd13', 'd14', 'd15', 'd16', 'd17','da1', 'da2', 'da3']
 
     final_dataset = pd.DataFrame(columns = colnames)
 

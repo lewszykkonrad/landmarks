@@ -1,5 +1,6 @@
 #This code will be helpful in occasional checking for consistency. I will be able to quickly process a given face and make sure
 #that my databases are correct, and the parameters/landmarks are correctly intepreted
+from typing import final
 import cv2
 import os
 import math
@@ -28,7 +29,7 @@ thickness = 1
 
 user_query = input("what image would you like to process? (what is the number of the image?):  ")
 
-path = "../../faces/high_quality_dataset/hot/image_" + user_query + ".jpg"
+path = "../../faces/high_quality_dataset/total_dataset/image_" + user_query + ".jpg"
 image = cv2.imread(path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -48,8 +49,8 @@ for (i, rect) in enumerate(rects):
 
 colnames = ['s1', 's2', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9',
                 'a10', 'a11', 'a12', 'a13', 'a14', 'a15', 'a16', 'a17', 'a18', 'a19',
-                'a20', 'a21', 'a22', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
-                'd10', 'd11', 'd12', 'd13', 'd14', 'da1', 'da2']
+                'a20', 'a21', 'a22', 'a23','d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9',
+                'd10', 'd11', 'd12', 'd13', 'd14', 'd15', 'd16', 'd17','da1', 'da2', 'da3']
 final_dataset = pd.DataFrame(columns = colnames)
 
 shape = dlib_functions.facial_landmark_processor(path)
@@ -59,4 +60,6 @@ print(final_dataset)
     
 cv2.imshow("image window",image)
 cv2.waitKey(0)
+
+
 

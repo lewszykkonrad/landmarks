@@ -12,7 +12,7 @@ import dlib_functions
 
 #detector and predictor needed for processing the face imagy by dlib and then predicting the landmarks on that image
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("C:/Users/lewsz/OneDrive/Desktop/master_thesis/shape_predictor_68_face_landmarks_GTX.dat")
+predictor = dlib.shape_predictor("C:/Users/lewsz/OneDrive/Desktop/master_thesis/shape_predictor_68_face_landmarks.dat")
 
 #folder with all the faces
 faces_folder_path = "C:/Users/lewsz/OneDrive/Desktop/master_thesis/faces/high_quality_dataset/total_dataset"
