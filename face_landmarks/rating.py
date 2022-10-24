@@ -366,7 +366,7 @@ def rational():
     def change_picture_and_store_rating(event): 
         global image_index
         image_index += 1
-        if 1 <= eval(entry.get()) <= 5:
+        if 0 <= eval(entry.get()) <= 5:
             res.configure(text = "Result: " + str(eval(entry.get())))
             sequence.append(eval(entry.get()))
             if image_index == len(images):
