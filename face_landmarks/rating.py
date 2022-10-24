@@ -187,8 +187,8 @@ def quintary():
     sequence = []
 
     #the sample of paths for images
-    sample = os.listdir("../../faces/high_quality_dataset/hot"), 702
-    sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
+    sample = os.listdir("../../faces/high_quality_dataset/total_dataset"), 702
+    sample = ["../../faces/high_quality_dataset/total_dataset" + choice for choice in sample]
 
     #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
     #between users
@@ -355,8 +355,8 @@ def rational():
 
     sequence = []
 
-    sample = os.listdir("../../faces/high_quality_dataset/hot"), 702
-    sample = ["../../faces/high_quality_dataset/hot/" + choice for choice in sample]
+    sample = os.listdir("../../faces/high_quality_dataset/total_dataset")
+    sample = ["../../faces/high_quality_dataset/total_dataset" + choice for choice in sample]
 
     image_names = [re.search(r"image_\d+.jpg", path).group() for path in sample]
 
