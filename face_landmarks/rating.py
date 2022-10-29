@@ -50,8 +50,8 @@ def binary():
     sequence = []
 
     #the sample of paths for images
-    #sample = random.sample(os.listdir("../../faces/high_quality_dataset/total_dataset"), 702)
-    sample = os.listdir("../../faces/high_quality_dataset/total_dataset")
+    sample = random.sample(os.listdir("../../faces/high_quality_dataset/total_dataset"), 702)
+    #sample = os.listdir("../../faces/high_quality_dataset/total_dataset")
     sample = ["../../faces/high_quality_dataset/total_dataset/" + choice for choice in sample]
 
     #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
@@ -187,7 +187,8 @@ def quintary():
     sequence = []
 
     #the sample of paths for images
-    sample = os.listdir("../../faces/high_quality_dataset/total_dataset")
+    sample = random.sample(os.listdir("../../faces/high_quality_dataset/total_dataset"), 702)
+    #sample = os.listdir("../../faces/high_quality_dataset/total_dataset")
     sample = ["../../faces/high_quality_dataset/total_dataset/" + choice for choice in sample]
 
     #it will be useful to keep the names of the pictures that the user is rating. Additionally, it might prove useful for future comparisons 
