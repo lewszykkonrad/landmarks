@@ -31,6 +31,7 @@ predictor = dlib.shape_predictor("C:/Users/lewsz/OneDrive/Desktop/master_thesis/
 def facial_landmark_processor(image_path):
     image = cv2.imread(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = cv2.resize(image, (400,500))
 
     rects = detector(image, 1)
 
@@ -85,7 +86,7 @@ def parameter_processor(shape):
     right_vision_area = Area(right_vision_points)
     
     left_vision_points = [shape[17], shape[18], shape[19], shape[20], shape[21], 
-                           shape[39], shape[40], shape[41], shape[39]]
+                           shape[39], shape[40], shape[41], shape[36]]
     left_vision_points = [tuple(x) for x in left_vision_points]
     left_vision_area = Area(left_vision_points)
     
