@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import imutils
 from imutils import face_utils
 from scipy.spatial import distance
-
+import time
 from shapely.geometry import Polygon
 
 #A function that calculates an area based on given points
@@ -32,13 +32,13 @@ def facial_landmark_processor(image_path):
     image = cv2.imread(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (400,500))
-
+    
     rects = detector(image, 1)
 
     for (i, rect) in enumerate(rects):
-
         shape = predictor(image, rect)
         shape = face_utils.shape_to_np(shape)
+
     shape = shape.tolist()
     return shape
 
