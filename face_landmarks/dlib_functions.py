@@ -24,7 +24,7 @@ def Area(corners):
 
 #For dlib to work we need a detector and a predictor defined   
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("C:/Users/lewsz/OneDrive/Desktop/master_thesis/shape_predictor_68_face_landmarks_GTX.dat")
+predictor = dlib.shape_predictor("C:/Users/lewsz/OneDrive/Desktop/master_thesis/shape_predictor_68_face_landmarks.dat")
 
 
 #This function is meant for processing the image by dlib
